@@ -1,0 +1,888 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Web Forger SA — Web Design & Development, Durban</title>
+  <style>
+    @import url('https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;1,300&family=Work+Sans:wght@200;300;400;500&display=swap');
+
+    :root {
+      --bg-dark: #0D0D0D;
+      --bg-light: #F7F6F3;
+      --accent: #E86A2B;
+      --accent-muted: #C45A1F;
+      --text-dark: #111111;
+      --text-light: #F7F6F3;
+      --border: rgba(17,17,17,0.10);
+      --border-light: rgba(247,246,243,0.12);
+    }
+
+    *, *::before, *::after {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    body {
+      background: var(--bg-light);
+      color: var(--text-dark);
+      font-family: 'Work Sans', sans-serif;
+      font-weight: 300;
+      line-height: 1.65;
+      overflow-x: hidden;
+    }
+
+    h1, h2, h3 {
+      font-family: 'Cormorant Garamond', serif;
+      font-weight: 300;
+      letter-spacing: 0.08em;
+    }
+
+    p {
+      font-size: 1rem;
+      color: rgba(17,17,17,0.65);
+      letter-spacing: 0.02em;
+    }
+
+    .eyebrow {
+      font-family: 'Work Sans', sans-serif;
+      font-size: 0.7rem;
+      text-transform: uppercase;
+      letter-spacing: 0.45em;
+      color: var(--accent);
+      display: block;
+      margin-bottom: 1.2rem;
+    }
+
+    .container {
+      max-width: 1280px;
+      margin: 0 auto;
+      padding: 0 2.5rem;
+    }
+
+    /* ====== NAV ====== */
+    nav {
+      position: fixed;
+      top: 0; left: 0;
+      width: 100%;
+      background: rgba(247,246,243,0.88);
+      backdrop-filter: blur(14px);
+      -webkit-backdrop-filter: blur(14px);
+      border-bottom: 0.5px solid var(--border);
+      z-index: 1000;
+    }
+
+    .nav-inner {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      height: 80px;
+    }
+
+    .nav-logo {
+      text-decoration: none;
+      display: flex;
+      flex-direction: column;
+      gap: 0.15rem;
+    }
+
+    .nav-logo .top {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 1.25rem;
+      text-transform: uppercase;
+      letter-spacing: 0.3em;
+      color: var(--text-dark);
+      line-height: 1;
+    }
+
+    .nav-logo .sub {
+      font-size: 0.5rem;
+      text-transform: uppercase;
+      letter-spacing: 0.5em;
+      color: rgba(17,17,17,0.4);
+    }
+
+    .nav-links {
+      display: flex;
+      gap: 3rem;
+      list-style: none;
+    }
+
+    .nav-links a {
+      text-decoration: none;
+      font-size: 0.72rem;
+      text-transform: uppercase;
+      letter-spacing: 0.22em;
+      color: var(--text-dark);
+      transition: color 0.3s;
+    }
+
+    .nav-links a:hover { color: var(--accent); }
+
+    /* ====== HERO ====== */
+    header {
+      padding: 160px 0 100px;
+      min-height: 90vh;
+      display: flex;
+      align-items: center;
+      position: relative;
+      overflow: hidden;
+    }
+
+    /* Subtle grid texture */
+    header::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background-image:
+        linear-gradient(var(--border) 1px, transparent 1px),
+        linear-gradient(90deg, var(--border) 1px, transparent 1px);
+      background-size: 60px 60px;
+      opacity: 0.4;
+      pointer-events: none;
+    }
+
+    .hero-grid {
+      display: grid;
+      grid-template-columns: 1.3fr 0.7fr;
+      gap: 6rem;
+      align-items: center;
+      position: relative;
+    }
+
+    .hero-text h1 {
+      font-size: 5rem;
+      line-height: 1.1;
+      margin-bottom: 2.2rem;
+      text-transform: uppercase;
+    }
+
+    .hero-text h1 em {
+      font-style: italic;
+      font-weight: 300;
+      color: var(--accent);
+      text-transform: none;
+    }
+
+    .hero-text p {
+      font-size: 1.1rem;
+      max-width: 480px;
+      margin-bottom: 3.5rem;
+      line-height: 1.8;
+    }
+
+    .hero-aside {
+      display: flex;
+      flex-direction: column;
+      gap: 1px;
+      border: 0.5px solid var(--border);
+      border-radius: 2px;
+      overflow: hidden;
+    }
+
+    .hero-aside-item {
+      padding: 2rem 2.5rem;
+      border-bottom: 0.5px solid var(--border);
+      background: white;
+      transition: background 0.3s;
+    }
+
+    .hero-aside-item:last-child { border-bottom: none; }
+
+    .hero-aside-item:hover { background: var(--bg-light); }
+
+    .hero-aside-item .stat {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 2.4rem;
+      color: var(--accent);
+      line-height: 1;
+      display: block;
+    }
+
+    .hero-aside-item .stat-label {
+      font-size: 0.65rem;
+      text-transform: uppercase;
+      letter-spacing: 0.3em;
+      color: rgba(17,17,17,0.45);
+      margin-top: 0.4rem;
+      display: block;
+    }
+
+    /* ====== BUTTON ====== */
+    .btn {
+      display: inline-flex;
+      align-items: center;
+      gap: 1.2rem;
+      padding: 1.1rem 2.5rem;
+      font-family: 'Work Sans', sans-serif;
+      font-size: 0.72rem;
+      font-weight: 400;
+      text-transform: uppercase;
+      letter-spacing: 0.28em;
+      text-decoration: none;
+      border-radius: 2px;
+      transition: all 0.35s cubic-bezier(0.16,1,0.3,1);
+    }
+
+    .btn-dark {
+      background: var(--text-dark);
+      color: var(--text-light);
+      border: 0.5px solid var(--text-dark);
+    }
+
+    .btn-dark:hover {
+      background: var(--accent);
+      border-color: var(--accent);
+      transform: translateY(-2px);
+    }
+
+    .btn-arrow::after {
+      content: '→';
+      font-size: 1rem;
+      transition: transform 0.3s;
+    }
+
+    .btn-arrow:hover::after { transform: translateX(4px); }
+
+    /* ====== STATEMENT BAND ====== */
+    .statement {
+      background: var(--bg-dark);
+      color: var(--text-light);
+      padding: 100px 0;
+    }
+
+    .statement-inner {
+      max-width: 860px;
+      margin: 0 auto;
+      text-align: center;
+    }
+
+    .statement h2 {
+      font-size: 2.6rem;
+      line-height: 1.35;
+      margin-bottom: 2rem;
+    }
+
+    .statement h2 em {
+      font-style: italic;
+      color: var(--accent);
+    }
+
+    .statement p {
+      color: rgba(247,246,243,0.6);
+      font-size: 1.1rem;
+      max-width: 660px;
+      margin: 0 auto;
+    }
+
+    /* ====== SERVICES ====== */
+    .services {
+      padding: 130px 0;
+    }
+
+    .section-head {
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-end;
+      margin-bottom: 5rem;
+      border-bottom: 0.5px solid var(--border);
+      padding-bottom: 2.5rem;
+    }
+
+    .section-head h2 {
+      font-size: 3rem;
+      text-transform: uppercase;
+      line-height: 1;
+    }
+
+    .section-head p {
+      max-width: 340px;
+      text-align: right;
+    }
+
+    .services-grid {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 1px;
+      background: var(--border);
+      border: 0.5px solid var(--border);
+      border-radius: 2px;
+      overflow: hidden;
+    }
+
+    .service-card {
+      background: var(--bg-light);
+      padding: 3.5rem 3rem;
+      transition: background 0.35s;
+      position: relative;
+    }
+
+    .service-card:hover { background: white; }
+
+    .service-num {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 1rem;
+      color: var(--accent);
+      letter-spacing: 0.1em;
+      display: block;
+      margin-bottom: 2rem;
+    }
+
+    .service-card h3 {
+      font-size: 1.55rem;
+      text-transform: uppercase;
+      margin-bottom: 1.2rem;
+      line-height: 1.2;
+    }
+
+    .service-card p {
+      font-size: 0.9rem;
+      line-height: 1.8;
+    }
+
+    /* ====== PROJECTS ====== */
+    .work {
+      padding: 0 0 130px;
+    }
+
+    .project-card {
+      background: var(--bg-dark);
+      border-radius: 3px;
+      padding: 5rem;
+      display: grid;
+      grid-template-columns: 0.9fr 1.1fr;
+      gap: 5rem;
+      align-items: center;
+      margin-bottom: 2rem;
+    }
+
+    .project-info .eyebrow { color: var(--accent); }
+
+    .project-info h3 {
+      color: var(--text-light);
+      font-size: 2.4rem;
+      text-transform: uppercase;
+      margin-bottom: 1.5rem;
+    }
+
+    .project-info p {
+      color: rgba(247,246,243,0.6);
+      margin-bottom: 3rem;
+      line-height: 1.9;
+    }
+
+    .project-tags {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.6rem;
+      margin-bottom: 2.5rem;
+    }
+
+    .tag {
+      font-size: 0.62rem;
+      text-transform: uppercase;
+      letter-spacing: 0.25em;
+      border: 0.5px solid var(--border-light);
+      color: rgba(247,246,243,0.5);
+      padding: 0.45rem 1rem;
+      border-radius: 1px;
+    }
+
+    .project-preview {
+      background: rgba(247,246,243,0.04);
+      border: 0.5px solid var(--border-light);
+      border-radius: 3px;
+      padding: 1.5rem;
+    }
+
+    .project-screen {
+      width: 100%;
+      aspect-ratio: 16/10;
+      background: linear-gradient(145deg, #1c1c1c 0%, #2a2a2a 100%);
+      border-radius: 2px;
+      position: relative;
+      overflow: hidden;
+      display: flex;
+      flex-direction: column;
+    }
+
+    /* Simulated browser chrome */
+    .browser-bar {
+      height: 28px;
+      background: #222;
+      display: flex;
+      align-items: center;
+      padding: 0 12px;
+      gap: 6px;
+      flex-shrink: 0;
+    }
+
+    .browser-dot {
+      width: 8px;
+      height: 8px;
+      border-radius: 50%;
+    }
+
+    .bd-r { background: #E86A2B; opacity: 0.7; }
+    .bd-y { background: #E8B02B; opacity: 0.7; }
+    .bd-g { background: #72B562; opacity: 0.7; }
+
+    .browser-content {
+      flex: 1;
+      background: #fff;
+      display: flex;
+      flex-direction: column;
+      gap: 0;
+    }
+
+    .sim-nav { height: 20px; background: #111; }
+
+    .sim-hero {
+      height: 60px;
+      background: linear-gradient(90deg, #111 0%, #222 100%);
+      display: flex;
+      align-items: center;
+      padding: 0 12px;
+      gap: 8px;
+    }
+
+    .sim-h-txt { 
+      width: 80px; height: 6px;
+      background: white;
+      border-radius: 2px;
+      opacity: 0.9;
+    }
+
+    .sim-h-accent {
+      width: 50px; height: 6px;
+      background: var(--accent);
+      border-radius: 2px;
+    }
+
+    .sim-body {
+      flex: 1;
+      padding: 10px 12px;
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 6px;
+      background: #f4f4f4;
+    }
+
+    .sim-card {
+      background: white;
+      border-radius: 2px;
+      border-left: 2px solid var(--accent);
+    }
+
+    .sim-footer { height: 18px; background: #111; }
+
+    .btn-light {
+      background: transparent;
+      color: var(--text-light);
+      border: 0.5px solid rgba(247,246,243,0.3);
+    }
+
+    .btn-light:hover {
+      background: var(--accent);
+      border-color: var(--accent);
+      transform: translateY(-2px);
+    }
+
+    /* ====== ABOUT STRIP ====== */
+    .about-strip {
+      background: white;
+      border-top: 0.5px solid var(--border);
+      border-bottom: 0.5px solid var(--border);
+      padding: 100px 0;
+    }
+
+    .about-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 6rem;
+      align-items: center;
+    }
+
+    .about-grid h2 {
+      font-size: 2.8rem;
+      text-transform: uppercase;
+      line-height: 1.2;
+      margin-bottom: 2rem;
+    }
+
+    .about-grid h2 em {
+      font-style: italic;
+      color: var(--accent);
+    }
+
+    .about-grid p {
+      font-size: 1rem;
+      line-height: 1.9;
+      margin-bottom: 1.5rem;
+    }
+
+    .about-stats {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 2px;
+      background: var(--border);
+      border: 0.5px solid var(--border);
+      border-radius: 2px;
+      overflow: hidden;
+    }
+
+    .about-stat {
+      background: var(--bg-light);
+      padding: 2.5rem 2rem;
+      text-align: center;
+    }
+
+    .about-stat .val {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 2.8rem;
+      color: var(--accent);
+      display: block;
+      line-height: 1;
+    }
+
+    .about-stat .lbl {
+      font-size: 0.6rem;
+      text-transform: uppercase;
+      letter-spacing: 0.3em;
+      color: rgba(17,17,17,0.4);
+      margin-top: 0.6rem;
+      display: block;
+    }
+
+    /* ====== FOOTER ====== */
+    footer {
+      background: #080808;
+      color: var(--text-light);
+      padding: 90px 0 40px;
+    }
+
+    .footer-top {
+      display: grid;
+      grid-template-columns: 1.6fr 1fr 1fr;
+      gap: 5rem;
+      margin-bottom: 5rem;
+      padding-bottom: 5rem;
+      border-bottom: 0.5px solid var(--border-light);
+    }
+
+    .footer-brand .logo-text {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 1.6rem;
+      text-transform: uppercase;
+      letter-spacing: 0.25em;
+      color: var(--text-light);
+      display: block;
+      margin-bottom: 0.4rem;
+    }
+
+    .footer-brand .logo-sub {
+      font-size: 0.5rem;
+      text-transform: uppercase;
+      letter-spacing: 0.5em;
+      color: rgba(247,246,243,0.3);
+      display: block;
+      margin-bottom: 2rem;
+    }
+
+    .footer-brand p {
+      color: rgba(247,246,243,0.45);
+      font-size: 0.9rem;
+      max-width: 300px;
+      line-height: 1.8;
+    }
+
+    .footer-col h4 {
+      font-family: 'Work Sans', sans-serif;
+      font-size: 0.62rem;
+      text-transform: uppercase;
+      letter-spacing: 0.4em;
+      color: var(--accent);
+      margin-bottom: 2rem;
+    }
+
+    .footer-col ul { list-style: none; }
+
+    .footer-col ul li { margin-bottom: 1.1rem; }
+
+    .footer-col ul li a {
+      text-decoration: none;
+      color: rgba(247,246,243,0.5);
+      font-size: 0.9rem;
+      transition: color 0.3s;
+    }
+
+    .footer-col ul li a:hover { color: var(--text-light); }
+
+    .footer-bottom {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    .footer-bottom p {
+      font-size: 0.7rem;
+      color: rgba(247,246,243,0.2);
+      letter-spacing: 0.12em;
+    }
+
+    .footer-social {
+      display: flex;
+      gap: 1.5rem;
+    }
+
+    .footer-social a {
+      color: rgba(247,246,243,0.35);
+      text-decoration: none;
+      font-size: 0.65rem;
+      text-transform: uppercase;
+      letter-spacing: 0.2em;
+      transition: color 0.3s;
+    }
+
+    .footer-social a:hover { color: var(--accent); }
+
+    /* ====== RESPONSIVE ====== */
+    @media (max-width: 1024px) {
+      .hero-grid,
+      .about-grid,
+      .project-card,
+      .footer-top {
+        grid-template-columns: 1fr;
+        gap: 3rem;
+      }
+
+      .hero-text h1 { font-size: 3.5rem; }
+      .section-head { flex-direction: column; align-items: flex-start; gap: 1rem; }
+      .section-head p { text-align: left; }
+      .services-grid { grid-template-columns: 1fr; }
+      .project-card { padding: 3rem 2rem; }
+    }
+
+    @media (max-width: 640px) {
+      .hero-text h1 { font-size: 2.6rem; }
+      .about-stats { grid-template-columns: 1fr; }
+      .nav-links { gap: 1.5rem; }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- NAV -->
+  <nav>
+    <div class="container nav-inner">
+      <a href="#" class="nav-logo">
+        <span class="top">Web Forger SA</span>
+        <span class="sub">Web Design & Development · Durban</span>
+      </a>
+      <ul class="nav-links">
+        <li><a href="#services">Services</a></li>
+        <li><a href="#work">Work</a></li>
+        <li><a href="#about">About</a></li>
+        <li><a href="#contact">Contact</a></li>
+      </ul>
+    </div>
+  </nav>
+
+  <!-- HERO -->
+  <header>
+    <div class="container hero-grid">
+      <div class="hero-text">
+        <span class="eyebrow">Durban, South Africa</span>
+        <h1>Forge Your <em>Online</em> Identity.</h1>
+        <p>Fast, conversion-focused websites built for South African businesses ready to grow. No templates. No filler. Just results.</p>
+        <a href="#contact" class="btn btn-dark btn-arrow">Request a Free Quote</a>
+      </div>
+      <div class="hero-aside">
+        <div class="hero-aside-item">
+          <span class="stat">90+</span>
+          <span class="stat-label">PageSpeed Score</span>
+        </div>
+        <div class="hero-aside-item">
+          <span class="stat">100%</span>
+          <span class="stat-label">Custom Code</span>
+        </div>
+        <div class="hero-aside-item">
+          <span class="stat">R0</span>
+          <span class="stat-label">Monthly Subscription</span>
+        </div>
+        <div class="hero-aside-item">
+          <span class="stat">ZA</span>
+          <span class="stat-label">Locally Focused</span>
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <!-- STATEMENT -->
+  <section class="statement">
+    <div class="container statement-inner">
+      <span class="eyebrow" style="color: rgba(247,246,243,0.4);">The Core Principle</span>
+      <h2>Most businesses lose clients to competitors with better websites — <em>not better services.</em></h2>
+      <p>From first click to final sale, every page we build is designed to turn visitors into paying customers. We change that dynamic permanently.</p>
+    </div>
+  </section>
+
+  <!-- SERVICES -->
+  <section class="services" id="services">
+    <div class="container">
+      <div class="section-head">
+        <div>
+          <span class="eyebrow">What We Do</span>
+          <h2>How We Help<br>Businesses Grow</h2>
+        </div>
+        <p>Every engagement is bespoke. We do not use page builders or generic themes — only clean, purposeful code.</p>
+      </div>
+
+      <div class="services-grid">
+        <div class="service-card">
+          <span class="service-num">01</span>
+          <h3>Digital Presence Systems</h3>
+          <p>Modern, mobile-first websites built to help your business stand out and convert visitors into customers. Designed for speed, clarity, and measurable results.</p>
+        </div>
+        <div class="service-card">
+          <span class="service-num">02</span>
+          <h3>Website Redesigns</h3>
+          <p>We rebuild slow, outdated sites into fast, modern experiences built for growth. Retain what works, remove what doesn't, and give your brand a digital identity it deserves.</p>
+        </div>
+        <div class="service-card">
+          <span class="service-num">03</span>
+          <h3>Business Automation</h3>
+          <p>Custom forms, WhatsApp integrations, booking flows, and back-end systems that automate your customer journey and save you hours every week.</p>
+        </div>
+        <div class="service-card">
+          <span class="service-num">04</span>
+          <h3>SEO & Visibility</h3>
+          <p>Structured, technical SEO built into every site from day one. We help local customers in your area find and choose your business over competitors.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- FEATURED WORK -->
+  <section class="work" id="work">
+    <div class="container">
+      <div class="section-head">
+        <div>
+          <span class="eyebrow">Selected Projects</span>
+          <h2>Featured Work</h2>
+        </div>
+      </div>
+
+      <!-- Project 1 -->
+      <div class="project-card">
+        <div class="project-info">
+          <span class="eyebrow">Consulting · Durban</span>
+          <h3>Elevated Consulting Solutions</h3>
+          <p>A professional landing page designed for a consulting brand focused on client trust and conversion. Clean layout, fast load times, and deliberate typography to signal authority.</p>
+          <div class="project-tags">
+            <span class="tag">HTML</span>
+            <span class="tag">CSS</span>
+            <span class="tag">JavaScript</span>
+            <span class="tag">Custom Code</span>
+          </div>
+          <a href="#" class="btn btn-light btn-arrow">Visit Website</a>
+        </div>
+        <div class="project-preview">
+          <div class="project-screen">
+            <div class="browser-bar">
+              <span class="browser-dot bd-r"></span>
+              <span class="browser-dot bd-y"></span>
+              <span class="browser-dot bd-g"></span>
+            </div>
+            <div class="browser-content">
+              <div class="sim-nav"></div>
+              <div class="sim-hero">
+                <div class="sim-h-txt"></div>
+                <div class="sim-h-accent"></div>
+              </div>
+              <div class="sim-body">
+                <div class="sim-card"></div>
+                <div class="sim-card"></div>
+                <div class="sim-card"></div>
+                <div class="sim-card"></div>
+              </div>
+              <div class="sim-footer"></div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- ABOUT -->
+  <section class="about-strip" id="about">
+    <div class="container about-grid">
+      <div>
+        <span class="eyebrow">Built From the Ground Up</span>
+        <h2>More than <em>just websites</em></h2>
+        <p>Web Forger SA was founded with one belief: South African businesses deserve world-class websites without the world-class price tag.</p>
+        <p>We are a lean, hands-on studio. Every project gets our full attention. Whether you are a trade business, a retailer, or a service provider, we build you a digital presence that works as hard as you do.</p>
+        <p style="margin-top: 2rem;">We also help businesses grow through Google Maps visibility, WhatsApp customer support, booking automation, and custom backend integrations.</p>
+      </div>
+      <div class="about-stats">
+        <div class="about-stat">
+          <span class="val">90+</span>
+          <span class="lbl">PageSpeed</span>
+        </div>
+        <div class="about-stat">
+          <span class="val">100%</span>
+          <span class="lbl">Custom Code</span>
+        </div>
+        <div class="about-stat">
+          <span class="val">R0</span>
+          <span class="lbl">Monthly Fee</span>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- FOOTER / CONTACT -->
+  <footer id="contact">
+    <div class="container">
+      <div class="footer-top">
+        <div class="footer-brand">
+          <span class="logo-text">Web Forger SA</span>
+          <span class="logo-sub">Web Design & Development</span>
+          <p>Building fast, honest digital presences for South African businesses. No subscriptions. No templates. Just results.</p>
+        </div>
+        <div class="footer-col">
+          <h4>Navigation</h4>
+          <ul>
+            <li><a href="#services">Services</a></li>
+            <li><a href="#work">Featured Work</a></li>
+            <li><a href="#about">About</a></li>
+            <li><a href="#">Privacy Policy</a></li>
+            <li><a href="#">Terms & Conditions</a></li>
+          </ul>
+        </div>
+        <div class="footer-col">
+          <h4>Contact Us</h4>
+          <ul>
+            <li><a href="https://wa.me/27000000000">WhatsApp</a></li>
+            <li><a href="mailto:hello@webforgersa.co.za">hello@webforgersa.co.za</a></li>
+            <li><a href="#">Instagram</a></li>
+            <li><a href="#">Facebook</a></li>
+            <li><a href="#">Durban, KZN · South Africa</a></li>
+          </ul>
+        </div>
+      </div>
+      <div class="footer-bottom">
+        <p>© 2026 Web Forger SA (Pty) Ltd · All Rights Reserved</p>
+        <div class="footer-social">
+          <a href="#">WhatsApp</a>
+          <a href="#">Instagram</a>
+          <a href="#">Facebook</a>
+        </div>
+      </div>
+    </div>
+  </footer>
+
+</body>
+</html>
